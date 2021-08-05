@@ -23,26 +23,33 @@ export class UsersService {
     async findOne(id: string): Promise<User> {
         const userId = await this.usersRepository.findOne(id);
         if (!userId) {
-            throw new HttpException('Usuário não exite', HttpStatus.BAD_REQUEST);
+            throw new HttpException('Usuário não existe', HttpStatus.BAD_REQUEST);
         }
 
         return userId;
     }
 
     async update(id: string, dto: UpdateUserDto) {
-        await this.usersRepository.update(id, dto);
-        return await this.findOne(id)
+        const userId = await this.findOne(id)
+
+        if (!userId) {
+            throw new HttpException('Usuário não existe', HttpStatus.BAD_REQUEST);
+        }
+
+        await this.usersRepository.update(userId, dto);
+
+        return userId;
     }
 
     async remove(id: string) {
         const userId = await this.findOne(id)
 
         if (!userId) {
-            throw new HttpException('Usuário não exite', HttpStatus.BAD_REQUEST);
+            throw new HttpException('Usuário não existe', HttpStatus.BAD_REQUEST);
         }
 
         await this.usersRepository.delete(userId);
 
-        return { message: 'Deletado com sucesso' }
+        return { message: 'Deletado com sucesso' };
     }
 }
