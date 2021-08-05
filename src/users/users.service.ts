@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -12,24 +12,36 @@ export class UsersService {
         private usersRepository: Repository<User>,
     ) { }
 
-    create(dto: CreateUserDto) {
-        return this.usersRepository.save(dto)
+    async create(dto: CreateUserDto) {
+        return await this.usersRepository.save(dto);
     }
 
-    findAll(): Promise<User[]> {
-        return this.usersRepository.find();
+    async findAll(): Promise<User[]> {
+        return await this.usersRepository.find();
     }
 
-    findOne(id: string): Promise<User> {
-        return this.usersRepository.findOne(id);
+    async findOne(id: string): Promise<User> {
+        const userId = await this.usersRepository.findOne(id);
+        if (!userId) {
+            throw new HttpException('Usuário não exite', HttpStatus.BAD_REQUEST);
+        }
+
+        return userId;
     }
 
-    update(id: string, dto: UpdateUserDto) {
-        return this.usersRepository.update(id, dto);
+    async update(id: string, dto: UpdateUserDto) {
+        await this.usersRepository.update(id, dto);
+        return await this.findOne(id)
     }
 
-    remove(id: string) {
-        this.usersRepository.delete(id);
+    async remove(id: string) {
+        const userId = await this.findOne(id)
+
+        if (!userId) {
+            throw new HttpException('Usuário não exite', HttpStatus.BAD_REQUEST);
+        }
+
+        await this.usersRepository.delete(userId);
 
         return { message: 'Deletado com sucesso' }
     }
