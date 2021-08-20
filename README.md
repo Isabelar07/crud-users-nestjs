@@ -47,10 +47,9 @@ npm run start:dev
 ```
 ---
 
-## Tabelas criadas no Workbench
+## Tabelas 
 
-### Usuários
-
+<img src="./assets/userBD.png">
 
 ---
 
