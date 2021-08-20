@@ -12,9 +12,7 @@
 
 ## 🖋 Descrição do projeto
 
-Esse projeto foi desenvolvido durante a talk do Orange Juice da FCamara, de Introdução ao NestJs.
-
-[Link da talk](https://youtu.be/EXDuoOyNAKg)  
+Esse projeto foi desenvolvido durante a [talk](https://youtu.be/EXDuoOyNAKg) da comunidade Orange Juice, da FCamara, de Introdução ao NestJs.
 
 ---
 
