@@ -49,7 +49,7 @@ npm run start:dev
 
 ## Tabelas 
 
-<img src="./assets/userBD.png">
+<img src="./assets/usersBD.png">
 
 ---
 
